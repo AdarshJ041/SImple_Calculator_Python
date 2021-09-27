@@ -14,6 +14,14 @@ display_label.place(relx='0.01', rely='0.06', height='95', width='450')
 # Adding Calculator buttons
 myFont = font.Font(family='Helvetica', size=20, weight='bold')
 
+any_operator_clicked = False
+plus_op_clicked = False
+minus_op_clicked = False
+into_op_clicked = False
+div_op_clicked = False
+per_op_clicked = False
+old_value = 0.0
+
 
 # Num Buttons
 def seven_button_clicked():
@@ -148,25 +156,85 @@ point_button.place(x=187, y=405, height=90, width=90)
 point_button['font'] = myFont
 
 
-# Operation Buttons
+def operator_clicked():
+    global any_operator_clicked
+    any_operator_clicked = True
+    global old_value
+    old_value = display_label.cget('text')
+    display_label.config(text='')
+    try:
+        old_value = float(old_value)
+        return old_value
+    except ValueError:
+        old_value = 0.0
+    if old_value == "":
+        old_value = 0.0
+    else:
+        old_value = float(old_value)
 
-plus_button = Button(window, text='+', bg='light grey')
+
+# Operation Buttons
+def plus_button_clicked():
+    global plus_op_clicked
+    plus_op_clicked = True
+    operator_clicked()
+
+
+plus_button = Button(window, text='+', bg='light grey', command=plus_button_clicked)
 plus_button.place(x=277, y=405, height=90, width=90)
 plus_button['font'] = myFont
 
-minus_button = Button(window, text='-', bg='light grey')
+
+def minus_button_clicked():
+    global plus_op_clicked
+    plus_op_clicked = False
+    global minus_op_clicked
+    minus_op_clicked = True
+    operator_clicked()
+
+
+minus_button = Button(window, text='-', bg='light grey', command=minus_button_clicked)
 minus_button.place(x=277, y=315, height=90, width=90)
 minus_button['font'] = myFont
 
-into_button = Button(window, text='x', bg='light grey')
+
+def into_button_clicked():
+    global plus_op_clicked
+    plus_op_clicked = False
+    global minus_op_clicked
+    minus_op_clicked = False
+    global into_op_clicked
+    into_op_clicked = True
+    operator_clicked()
+
+
+into_button = Button(window, text='x', bg='light grey', command=into_button_clicked)
 into_button.place(x=277, y=225, height=90, width=90)
 into_button['font'] = myFont
 
-div_button = Button(window, text='/', bg='light grey')
+
+def div_button_clicked():
+    global plus_op_clicked
+    plus_op_clicked = False
+    global minus_op_clicked
+    minus_op_clicked = False
+    global into_op_clicked
+    into_op_clicked = False
+    global div_op_clicked
+    div_op_clicked = True
+    operator_clicked()
+
+
+div_button = Button(window, text='/', bg='light grey', command=div_button_clicked)
 div_button.place(x=277, y=135, height=90, width=90)
 div_button['font'] = myFont
 
-clear_button = Button(window, text='AC', bg='light grey')
+
+def clear_button_clicked():
+    display_label.config(text="")
+
+
+clear_button = Button(window, text='AC', bg='light grey', command=clear_button_clicked)
 clear_button.place(x=367, y=135, height=90, width=90)
 clear_button['font'] = myFont
 

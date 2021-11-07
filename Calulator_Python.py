@@ -242,11 +242,40 @@ backspace_button = Button(window, text='CE', bg='light grey')
 backspace_button.place(x=367, y=225, height=90, width=90)
 backspace_button['font'] = myFont
 
-percent_button = Button(window, text='%', bg='light grey')
+
+def percent_button_clicked():
+    global per_op_clicked
+    per_op_clicked = True
+    operator_clicked()
+
+
+percent_button = Button(window, text='%', bg='light grey', command=percent_button_clicked)
 percent_button.place(x=367, y=315, height=90, width=90)
 percent_button['font'] = myFont
 
-equal_button = Button(window, text='=', bg='light grey')
+
+def equal_button_clicked():
+    new_str_text = display_label.cget('text')
+    new_value = float(new_str_text)
+    result = 0.0
+    if plus_op_clicked:
+        result = old_value + new_value
+    elif minus_op_clicked:
+        result = old_value - new_value
+    elif into_op_clicked:
+        result = old_value * new_value
+    elif div_op_clicked:
+        try:
+            result = old_value / new_value
+        except ZeroDivisionError:
+            result = "Infinity"
+    display_label.config(text=result)
+    if per_op_clicked:
+        result = str((old_value / 100) * new_value)
+        display_label.config(text=result)
+
+
+equal_button = Button(window, text='=', bg='light grey', command=equal_button_clicked)
 equal_button.place(x=367, y=405, height=90, width=90)
 equal_button['font'] = myFont
 
